@@ -1,0 +1,55 @@
+<html>
+  <head>
+  </head>
+  <body>
+      <section>
+        <div>
+            <button onclick="addProgressBar()">Play</button>
+            <button onclick="pauseProgressBar()">Pause</button>
+            <div id="js_progressBars">
+
+            </div>
+        </div>
+      </section>
+      <script>
+          // var noOfProgressBars = [];
+          var progressBar = null;
+          function addProgressBar(){
+              progressBar = new ProgressBar(5);
+              progressBar.play();
+              // noOfProgressBars++;
+          }
+
+          function pauseProgressBar(){
+              $(document).trigger( "pauseProgressBars" );
+              // Another Method
+              // for (var i = 0; i < noOfProgressBars; i++) {
+              //   clearInterval(i);
+              // }
+          }
+
+      </script>
+      <script>
+          // Another Method...
+          // var noOfProgressBars = [];
+          // var progressBar = null;
+          // function addProgressBar(){
+          //     progressBar = new ProgressBar(5);
+          //     progressBar.play();
+          //     noOfProgressBars++;
+          // }
+          //
+          // function pauseProgressBar(){
+          //     // $(document).trigger( "pauseProgressBars" );
+          //     // Another Method
+          //     for (var i = 0; i < noOfProgressBars; i++) {
+          //       clearInterval(i);
+          //     }
+          // }
+
+      </script>
+      <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src="progressBar.js"></script>
+  </body>
+
+</html>
