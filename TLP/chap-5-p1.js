@@ -8,47 +8,47 @@
 
     class StudentRecord {
         constructor(id, name, score) {
-            this.id = id;
-            this.name = name;
-            this.score = score;
-            this.nextStudentRecord = null;
+            this._id = id;
+            this._name = name;
+            this._score = score;
+            this._nextStudentRecord = null;
         }
-        //
-        // get score() {
-        //     return this._score;
-        // }
-        //
-        // set score(newScore){
-        //     this._score = newScore;
-        // }
-        //
-        // get id() {
-        //     return this._id;
-        // }
-        //
-        // set id(newId){
-        //     this._id = newId;
-        // }
-        //
-        // get nextStudentRecord() {
-        //     return this._nextStudentRecord;
-        // }
-        //
-        // set nextStudentRecord(newNextRecord){
-        //     this._nextStudentRecord = newNextRecord;
-        // }
-        //
-        // get name() {
-        //     return this._name;
-        // }
-        //
-        // set name(newName){
-        //     if(nameRegex.test(newName)) {
-        //         this._name = newName;
-        //     } else {
-        //
-        //     }
-        // }
+
+        get score() {
+            return this._score;
+        }
+
+        set score(newScore){
+            this._score = newScore;
+        }
+
+        get id() {
+            return this._id;
+        }
+
+        set id(newId){
+            this._id = newId;
+        }
+
+        get nextStudentRecord() {
+            return this._nextStudentRecord;
+        }
+
+        set nextStudentRecord(newNextRecord){
+            this._nextStudentRecord = newNextRecord;
+        }
+
+        get name() {
+            return this._name;
+        }
+
+        set name(newName){
+            if(nameRegex.test(newName)) {
+                this._name = newName;
+            } else {
+
+            }
+        }
     }
 
 
@@ -56,20 +56,26 @@
 
         constructor() {
             this._headStudentRecord = null;
+
         }
 
+        // The addRecord operation is expected to be called frequently, so it must be implemented efficiently.
+        // Currently it add to the end of the linked list, for pef reasons we can add to the head..
         addStudent(id, name, score){
             let studentRecord = new StudentRecord(id, name, score);
-            studentRecord.nextStudentRecord = null;
-            if(!this._headStudentRecord){
-                this._headStudentRecord = studentRecord;
-            } else {
-                var studentRecords = this._headStudentRecord;
-                while(studentRecords.nextStudentRecord){
-                    studentRecords = studentRecords.nextStudentRecord;
-                }
-                studentRecords.nextStudentRecord = studentRecord;
-            }
+            studentRecord.nextStudentRecord = this._headStudentRecord;
+            this._headStudentRecord = studentRecord;
+
+
+            // if(!this._headStudentRecord){
+            //     this._headStudentRecord = studentRecord;
+            // } else {
+            //     var studentRecords = this._headStudentRecord;
+            //     while(studentRecords.nextStudentRecord){
+            //         studentRecords = studentRecords.nextStudentRecord;
+            //     }
+            //     studentRecords.nextStudentRecord = studentRecord;
+            // }
         }
 
         getRankUpdated(score){
@@ -86,7 +92,7 @@
             var studentRecords = this._headStudentRecord;
 
             if(studentRecords.id === id){
-                this._headStudentRecord =  null;
+                this._headStudentRecord =  this._headStudentRecord.nextStudentRecord;
                 return;
             }
 
@@ -99,6 +105,8 @@
                     studentRecords = studentRecords.nextStudentRecord;
                 }
             }
+
+            console.log("Record with id:" + id + " not found for delete operation!")
         }
 
         displayStudent(id){
@@ -112,6 +120,8 @@
                     studentRecords = studentRecords.nextStudentRecord;
                 }
             }
+
+            console.log("Record with id:" + id + " not found for display operation!")
         }
 
         displayStudents(){
@@ -123,12 +133,21 @@
             }
         }
 
+        deleteStudents(){
+            var studentRecords = this._headStudentRecord;
+
+            while (studentRecords) {
+                this.removeStudent(studentRecords.id);
+                studentRecords = studentRecords.nextStudentRecord;
+            }
+        }
+
         showAverageScore(){
             let averageScore = 0;
             var studentRecords = this._headStudentRecord;
             var classStrength = 0;
             while (studentRecords) {
-                averageScore += this.getRankUpdated(studentRecords.score);
+                averageScore += studentRecords.score;
                 studentRecords = studentRecords.nextStudentRecord;
                 classStrength++;
             }
@@ -152,4 +171,6 @@
     classRoom.displayStudent(3);
     classRoom.showAverageScore();
     classRoom.removeStudent(5);
+    classRoom.displayStudents();
+    classRoom.deleteStudents();
     classRoom.displayStudents();
